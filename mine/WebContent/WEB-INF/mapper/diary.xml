@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="diary">
+	<insert id="write" parameterType="java.util.HashMap">
+		insert into diary(title, content, id, nick, day, folder) values(#{title}, #{content}, #{id}, #{nick}, now(), #{folder})
+	</insert>
+	<update id="modify" parameterType="java.util.HashMap">
+		update diary set title = #{title}, content = #{content} where auto = #{num}
+	</update>
+	<select id="diary" resultType="java.util.HashMap">
+		select * from diary order by auto desc
+	</select>
+	<select id="page" resultType="java.lang.Integer">
+		select count(*) from diary
+	</select>
+	<delete id="remove">
+		delete from diary where auto = #{num}
+	</delete>
+	<select id="view" resultType="java.util.HashMap">
+		select * from diary where auto = #{num}
+	</select>
+	<select id="search" resultType="java.util.HashMap">
+		select * from diary where folder = #{folder} order by auto desc
+	</select>
+	<insert id="reply" parameterType="java.util.HashMap">
+		insert into diary_reply(num, reply, id, nick, day) values(#{num}, #{reply}, #{id}, #{nick}, now())
+	</insert>
+	<select id="replyList" resultType="java.util.HashMap">
+		select * from diary_reply where num = #{num} order by auto desc
+	</select>
+</mapper>
